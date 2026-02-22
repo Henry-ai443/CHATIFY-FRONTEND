@@ -1,4 +1,4 @@
-iimport { io } from "socket.io-client";
+import { io } from "socket.io-client";
 
 // Use your backend in production, localhost in development
 const SOCKET_URL ="https://chatify-backend-4p7g.onrender.com";
