@@ -13,23 +13,26 @@ import NoConversationPlaceholder from '../components/NoConversationPlaceholder';
 
   const {activeTab, selectedUser} = useChatStore();
   return (
-      <div className='relative w-full max-w-6xl h-[800px]'>
+      <div className='w-full h-screen flex items-center justify-center'>
+        <div className='relative w-full max-w-7xl h-[90vh] flex justify-center'>
+          <BorderAnimatedContainer>
+            <div className='flex w-full h-full rounded-2xl overflow-hidden'>
+              {/* Left Side - Contacts/Chats */}
+              <div className='w-80 bg-slate-800/50 backdrop-blur-sm flex flex-col border-r border-slate-700/50'>
+                <ProfileHeader/>
+                <ActiveTabSwitch/>
+                <div className='flex-1 overflow-y-auto p-4 space-y-2'>
+                  {activeTab === 'chats' ? <ChatList/> : <ContactsList/>}
+                </div>
+              </div>
 
-        <BorderAnimatedContainer>
-          <div className='w-80 bg-slate-800/50 backdrop-blur-sm flex flex-col'>
-          <ProfileHeader/>
-          <ActiveTabSwitch/>
-          <div className='flex-1 overflow-y-auto p-4 space-y-2'>
-            {activeTab === 'chats' ? <ChatList/> : <ContactsList/>}
-          </div>
-          </div>
-
-          {/*/* Right side*/}
-          <div className='flex-1 flex flex-col bg-slate-900/50 backdrop-blur-sm'>
-            {selectedUser ? <ChatContainer/> : <NoConversationPlaceholder/>}
-          </div>
-        </BorderAnimatedContainer>
-
+              {/* Right Side - Chat Messages & Input */}
+              <div className='flex-1 flex flex-col bg-slate-900/50 backdrop-blur-sm'>
+                {selectedUser ? <ChatContainer/> : <NoConversationPlaceholder/>}
+              </div>
+            </div>
+          </BorderAnimatedContainer>
+        </div>
       </div>
   );
 }

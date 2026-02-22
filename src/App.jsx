@@ -4,21 +4,35 @@ import ChatPage from './pages/ChatPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import { useAuthStore } from './store/useAuthStore';
+import { useChatStore } from './store/useChatStore';
 import PageLoader from './components/PageLoader';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
   const { checkAuth, authUser, isCheckingAuth } = useAuthStore();
+  const { initializeSocket, disconnectSocket } = useChatStore();
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
+  useEffect(() => {
+    if (authUser) {
+      initializeSocket(authUser._id);
+    }
+
+    return () => {
+      if (authUser) {
+        disconnectSocket();
+      }
+    };
+  }, [authUser, initializeSocket, disconnectSocket]);
+
   console.log("authuser", authUser);
 
   if (isCheckingAuth) return <PageLoader />;
   return (
-    <div className="relative min-h-screen bg-slate-900 flex items-center justify-center p-4 overflow-hidden">
+    <div className="relative w-screen h-screen bg-slate-900 flex items-center justify-center overflow-hidden">
       
       <div
         className="
@@ -31,7 +45,7 @@ function App() {
       <div className="absolute top-0 -left-4 z-0 size-96 bg-pink-500 opacity-20 blur-[100px] pointer-events-none" />
       <div className="absolute bottom-0 -right-4 z-0 size-96 bg-cyan-500 opacity-20 blur-[100px] pointer-events-none" />
 
-      <div className="relative z-10 w-full">
+      <div className="relative z-10 w-full h-full flex items-center justify-center">
         <Routes>
           <Route path='/' element={authUser ? <ChatPage /> : <Navigate to="/login" />} />
           <Route path="/login" element={ !authUser ? <LoginPage /> : <Navigate to="/" />} />
