@@ -1,7 +1,6 @@
 import { io } from "socket.io-client";
 
-// Use your backend in production, localhost in development
-const SOCKET_URL ="https://chatify-backend-4p7g.onrender.com";
+const SOCKET_URL = import.meta.env.VITE_BACKEND_URL;
 
 let socket = null;
 
@@ -9,7 +8,7 @@ export const initSocket = () => {
   if (socket) return socket;
 
   socket = io(SOCKET_URL, {
-    withCredentials: true, // needed for cookie-based auth
+    withCredentials: true,
     reconnection: true,
     reconnectionDelay: 1000,
     reconnectionDelayMax: 5000,
