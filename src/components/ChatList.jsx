@@ -3,7 +3,7 @@ import { useChatStore } from '../store/useChatStore'
 import { useAuthStore } from '../store/useAuthStore'
 import { Loader2, User } from 'lucide-react'
 
-export default function ChatList() {
+export default function ChatList({ onSelectChat }) {
   const { chats, isUsersLoading, setSelectedUser, selectedUser, getMyChatPartners, onlineUsers } = useChatStore();
   const { authUser } = useAuthStore();
 
@@ -33,7 +33,10 @@ export default function ChatList() {
       {chats.map((user) => (
         <button
           key={user._id}
-          onClick={() => setSelectedUser(user)}
+          onClick={() => {
+            setSelectedUser(user);
+            onSelectChat?.();
+          }}
           className={`w-full p-3 rounded-lg transition-colors text-left ${
             selectedUser?._id === user._id
               ? 'bg-slate-700/60 border border-cyan-500/30'

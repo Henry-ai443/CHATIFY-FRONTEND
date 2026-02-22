@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useChatStore } from '../store/useChatStore'
 import { Loader2, User } from 'lucide-react'
 
-function ContactList() {
+function ContactList({ onSelectChat }) {
   const { allContacts, isUsersLoading, setSelectedUser, selectedUser, getAllContacts, onlineUsers } = useChatStore();
 
   useEffect(() => {
@@ -31,7 +31,10 @@ function ContactList() {
       {allContacts.map((user) => (
         <button
           key={user._id}
-          onClick={() => setSelectedUser(user)}
+          onClick={() => {
+            setSelectedUser(user);
+            onSelectChat?.();
+          }}
           className={`w-full p-3 rounded-lg transition-colors text-left ${
             selectedUser?._id === user._id
               ? 'bg-slate-700/60 border border-cyan-500/30'
