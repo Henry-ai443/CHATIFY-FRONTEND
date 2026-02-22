@@ -119,7 +119,7 @@ function ChatContainer() {
             </p>
           </div>
         ) : (
-          messages.slice().reverse().map((message) => {
+          messages.slice().map((message) => {
             const isOwnMessage = message.senderId === authUser._id || message.senderId._id === authUser._id;
             const senderName = message.senderId?.fullName || 'Unknown';
             
