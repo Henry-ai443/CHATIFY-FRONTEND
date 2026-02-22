@@ -88,7 +88,7 @@ function ChatContainer() {
   return (
     <div className='w-full h-full flex flex-col bg-gradient-to-b from-slate-900/50 to-slate-900/80'>
       {/* Header */}
-      <div className='p-4 border-b border-slate-700/50 flex items-center justify-between'>
+      <div className='p-3 md:p-4 border-b border-slate-700/50 flex items-center justify-between'>
         <div className='flex items-center gap-3'>
           <div className='relative'>
             <img
@@ -110,7 +110,7 @@ function ChatContainer() {
       </div>
 
       {/* Messages */}
-      <div className='flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth'>
+      <div className='flex-1 overflow-y-auto p-3 md:p-4 space-y-4 scroll-smooth flex flex-col'>
         {messages.length === 0 ? (
           <div className='h-full flex items-center justify-center text-slate-400'>
             <p className='text-center'>
@@ -119,7 +119,7 @@ function ChatContainer() {
             </p>
           </div>
         ) : (
-          messages.map((message) => {
+          messages.slice().reverse().map((message) => {
             const isOwnMessage = message.senderId === authUser._id || message.senderId._id === authUser._id;
             const senderName = message.senderId?.fullName || 'Unknown';
             
@@ -182,7 +182,7 @@ function ChatContainer() {
       </div>
 
       {/* Input Area */}
-      <div className='p-4 border-t border-slate-700/50 space-y-3'>
+      <div className='p-3 md:p-4 border-t border-slate-700/50 space-y-3'>
         {selectedImage && (
           <div className='relative w-20 h-20 rounded-lg overflow-hidden border border-slate-600/50'>
             <img src={selectedImage} alt='preview' className='w-full h-full object-cover' />
